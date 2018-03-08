@@ -1,0 +1,106 @@
+<html>
+<head>
+	<title>XML Decoder</title>
+</head>
+<body>
+	<style>
+		#container{
+			min-height: 100%;
+		}
+
+		#input, #buttons, #output{
+			float: left;
+			height: 100%;
+		}
+
+		#input, #output{
+			width: 45%;
+		}
+
+		#buttons{
+			text-align: center;
+			width: 10%;
+		}
+
+		textarea{
+			width: 100%;
+			height: 100%;
+		}
+
+		#escape-btn{
+			margin-top: 40vh;
+		}
+
+		.btn{
+			border: none;
+			border-radius: 3px;
+			padding: .7em;
+			font-size: small;
+		}
+
+		.btn-red{
+			color: white;
+			background: red;
+		}
+
+		.btn-blue{
+			color: white;
+			background: blue;
+		}
+
+		.btn-green{
+			color: white;
+			background: green;
+		}
+
+	</style>
+	<div id="container">
+		<div id="input">
+			<form>
+				<textarea id="input-text" autofocus="true"></textarea>
+			</form>
+		</div>
+		<div id="buttons">
+			<button id="escape-btn" class="btn btn-red">Escape</button><br><br>
+			<button id="unescape-btn" class="btn btn-green">Unescape</button>
+		</div>
+		<div id="output">
+			<form>
+				<textarea id="output-text"></textarea>
+			</form>
+		</div>
+	</div>
+	<script src="jquery-3.3.1.min.js" type="application/javascript"></script>
+	<script src="xml_prettier.js" type="application/javascript"></script>
+	<script type="application/javascript">
+		$(function(){
+			//Unescape
+			$("#unescape-btn").on("click", function(){
+				let inputText = $("#input-text").val();
+				console.log(inputText);
+				let unescaped = inputText.replace(/&apos;/g, "'")
+               .replace(/&quot;/g, '"')
+               .replace(/&gt;/g, '>')
+               .replace(/&lt;/g, '<')
+               .replace(/&amp;/g, '&');
+               console.log(unescaped);
+				$("#output-text").val(prettifyXml(unescaped));
+			});
+
+
+			//Escape
+			$("#escape-btn").on("click", function(){
+				let inputText = $("#input-text").val();
+				console.log(inputText);
+				let escaped = inputText.replace(/&/g, '&amp;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;')
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&apos;');
+               console.log(escaped);
+				$("#output-text").val(escaped);
+			});
+		});
+	</script>
+</body>
+</html>
